@@ -25,6 +25,9 @@
 .fd-c {
   flex-direction: column;
 }
+.content {
+  margin-top: 20px;
+}
 .tile {
   width: 150px;
   height: 150px;
