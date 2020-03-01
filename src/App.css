@@ -12,6 +12,11 @@
   font-size: 25px;
   width: 400px;
 }
+.search-btn {
+  padding: 10px;
+  border: 1px solid #ccc;
+  font-size: 25px;
+}
 .f {
   display: flex;
   justify-content: center;

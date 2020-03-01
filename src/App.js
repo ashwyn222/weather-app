@@ -1,61 +1,29 @@
 import React from 'react';
 import './App.css';
+import InputCity from './components/InputCity';
+import WeatherDetails from './components/WeatherDetails';
 
 class App extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      query: '',
-      weatherinfo: []
+      city: '',
+      cityId: null,
+      cityInfo: [{"id":707860,"name":"Hurzuf","country":"UA","coord":{"lon":34.283333,"lat":44.549999}},{"id":519188,"name":"India","country":"RU","coord":{"lon":37.666668,"lat":55.683334}},{"id":1283378,"name":"Gorkhā","country":"NP","coord":{"lon":84.633331,"lat":28}},{"id":1270260,"name":"State of Haryāna","country":"IN","coord":{"lon":76,"lat":29}},{"id":708546,"name":"Holubynka","country":"UA","coord":{"lon":33.900002,"lat":44.599998}},{"id":1283710,"name":"Bāgmatī Zone","country":"NP","coord":{"lon":85.416664,"lat":28}},{"id":529334,"name":"Mar’ina Roshcha","country":"RU","coord":{"lon":37.611111,"lat":55.796391}},{"id":1269750,"name":"Republic of India","country":"IN","coord":{"lon":77,"lat":20}}]
     }
   }
 
-  handleChange(e) {
-    console.log(this.state.query);
-    //this.setState({ query: e.target.value });
-    this.sendRequest();
-  }
-
-  sendRequest() {
-    fetch('http://samples.openweathermap.org/data/2.5/weather?id=1264527&appid=2dbe93d485a7fc29365445a9669b0e72')
-      .then(res => res.json())
-      .then(
-        (result) => {
-          console.log(result);
-          this.setState({weatherinfo: result});
-        },
-        (error) => {
-          console.log("error occurred while retrieving weather details");
-        }
-      )
+  submitCity = (city) => {
+    this.setState({cityId: this.state.cityInfo.find(a => a.name === city).id});
   }
 
   render() {
     return (
       <div className="app">
         <div className="container f fd-c">
-          
-          <div className="header">
-            <input
-              className="search-input"
-              type="text"
-              value={this.state.query}
-              onChange={this.handleChange.bind(this)}
-            />
-          </div>
-          <div className="content f">
-            <div className="tile">{this.state.weatherinfo?.coord.lat} - {this.state.weatherinfo?.coord.lon}</div>
-            <div className="tile">
-              Temperature: {this.state.weatherinfo.main.temp}<br></br>
-              Pressure: {this.state.weatherinfo.main.pressure}<br></br>
-              Humidity: {this.state.weatherinfo.main.humidity}<br></br>
-              Min Temp: {this.state.weatherinfo.main.temp_min}<br></br>
-              Max temp: {this.state.weatherinfo.main.temp_max}<br></br>
-            </div>
-            <div className="tile">Tomorrow - {this.state.weatherinfo[2]}</div>
-          </div>
-
+          <InputCity submitCity={this.submitCity}></InputCity>
+          <WeatherDetails cityId={this.state.cityId}></WeatherDetails>
         </div>
       </div>
     );
